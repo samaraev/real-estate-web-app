@@ -625,7 +625,8 @@
     "payments": "Payments",
     "openRequests": "Open requests",
     "overdueSum": "Overdue",
-    "nothingDue": "Nothing to pay"
+    "nothingDue": "Nothing to pay",
+    "generateNow": "Generate invoices for the month"
   },
   "lease": {
     "title": "Lease",
