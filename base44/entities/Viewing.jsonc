@@ -1,0 +1,95 @@
+{
+  "name": "Viewing",
+  "type": "object",
+  "properties": {
+    "listing_id": {
+      "type": "string"
+    },
+    "listing_title": {
+      "type": "string"
+    },
+    "owner_user_id": {
+      "type": "string"
+    },
+    "slot_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "slot_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "requested",
+        "confirmed",
+        "rescheduled",
+        "cancelled",
+        "completed"
+      ],
+      "default": "requested",
+      "enumColors": [
+        "yellow",
+        "green",
+        "blue",
+        "red",
+        "gray"
+      ]
+    },
+    "comment": {
+      "type": "string"
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "reminder_sent": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "listing_id",
+    "slot_start"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

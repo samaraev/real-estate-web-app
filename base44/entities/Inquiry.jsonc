@@ -2,54 +2,95 @@
   "name": "Inquiry",
   "type": "object",
   "properties": {
-    "full_name": {
-      "type": "string",
-      "title": "Full Name"
+    "listing_id": {
+      "type": "string"
     },
-    "email": {
-      "type": "string",
-      "title": "Email"
+    "listing_title": {
+      "type": "string"
+    },
+    "owner_user_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
     },
     "phone": {
-      "type": "string",
-      "title": "Phone"
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
     },
     "message": {
-      "type": "string",
-      "title": "Message"
-    },
-    "property_id": {
-      "type": "string",
-      "title": "Property ID"
-    },
-    "inquiry_type": {
-      "type": "string",
-      "enum": [
-        "General",
-        "Tour Request",
-        "Price Inquiry",
-        "Virtual Tour"
-      ],
-      "title": "Inquiry Type"
-    },
-    "preferred_date": {
-      "type": "string",
-      "title": "Preferred Date"
+      "type": "string"
     },
     "status": {
       "type": "string",
       "enum": [
-        "New",
-        "Contacted",
-        "Scheduled",
-        "Closed"
+        "new",
+        "in_progress",
+        "closed",
+        "spam"
       ],
-      "title": "Status"
+      "default": "new",
+      "enumColors": [
+        "blue",
+        "yellow",
+        "green",
+        "red"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "listing",
+        "agency",
+        "partner",
+        "support"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "purple",
+        "yellow"
+      ]
     }
   },
   "required": [
-    "full_name",
-    "email",
-    "inquiry_type"
-  ]
+    "message"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }

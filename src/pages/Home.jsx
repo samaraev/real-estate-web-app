@@ -1,76 +1,88 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { base44 } from "@/api/base44Client";
-import HeroSection from "../components/home/HeroSection";
-import HighPriorityListings from "../components/home/HighPriorityListings";
-import NeighborhoodExpertise from "../components/home/NeighborhoodExpertise";
-import ServicesOverview from "../components/home/ServicesOverview";
-import AgentHighlights from "../components/home/AgentHighlights";
-import ClientStories from "../components/home/ClientStories";
-
+import React, { useEffect, useState } from 'react';
+import { useI18n } from '@/i18n';
+import HeroSearch from '@/components/home/HeroSearch';
+import FeaturedListings from '@/components/home/FeaturedListings';
+import HowItWorks from '@/components/home/HowItWorks';
+import CitiesGrid from '@/components/home/CitiesGrid';
+import TrustSection from '@/components/home/TrustSection';
+import CtaBanner from '@/components/home/CtaBanner';
+import { base44 } from '@/api/base44Client';
+import usePageMeta from '@/hooks/usePageMeta';
 
 export default function Home() {
-  const [properties, setProperties] = useState([]);
-  const [agents, setAgents] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { t } = useI18n();
+  const [total, setTotal] = useState(null);
+
+  usePageMeta({
+    title: t('nav.home'),
+    description: t('home.subtitle'),
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=70',
+  });
 
   useEffect(() => {
-    const load = async () => {
-      const [p, a, t] = await Promise.all([
-      base44.entities.Property.filter({ is_featured: true }, "-created_date", 6),
-      base44.entities.Agent.filter({ is_featured: true }, "-created_date", 3),
-      base44.entities.Testimonial.list("-created_date", 5)]
-      );
-      // Sort so Marina District Mediterranean Villa is first
-      const sorted = p.sort((x, y) => {
-        if (x.title === "Marina District Mediterranean Villa") return -1;
-        if (y.title === "Marina District Mediterranean Villa") return 1;
-        return 0;
-      });
-      setProperties(sorted);
-      setAgents(a);
-      setTestimonials(t);
-      setLoading(false);
+    let active = true;
+    base44.entities.Listing.count({ status: 'published' })
+      .then((count) => active && setTotal(count))
+      .catch(() => {});
+    return () => {
+      active = false;
     };
-    load();
   }, []);
-
-  const parallaxRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: parallaxRef, offset: ["start end", "end start"] });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin" />
-      </div>);
-
-  }
 
   return (
     <div>
-      <HeroSection heroImage="https://media.base44.com/videos/public/6a0c3ea982f98940623f21f5/a0e02d2b4_Video_Back.mp4" />
-      <HighPriorityListings properties={properties} />
-      <div className="hairline max-w-[1400px] mx-auto" />
-      <NeighborhoodExpertise />
-      <ServicesOverview />
-      <div className="hairline max-w-[1400px] mx-auto" />
-      <AgentHighlights agents={agents} />
-      <ClientStories testimonials={testimonials} />
-      <section className="w-full h-[280px] md:h-[600px] overflow-hidden relative">
-        <motion.div
-          ref={parallaxRef}
-          className="absolute inset-0 w-full h-[140%] top-[-20%]"
-          style={{ y: parallaxY }}
-        >
-          <img
-            src="https://media.base44.com/images/public/6a0c3ea982f98940623f21f5/6dda216cf_Base44_Templates_Gemini_3__Nano_Banana_Pro__2026-05-19_14-53-44.jpg"
-            alt="Luxury brutalist modern home"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      </section>
-    </div>);
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_100%_at_85%_0%,hsl(var(--secondary))_0%,transparent_55%)]" />
+        <div className="relative mx-auto grid w-full max-w-content gap-10 px-4 pb-12 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14 lg:pb-20">
+          <div>
+            <p className="label-xs">{t('home.badge')}</p>
+            <h1 className="mt-4 max-w-xl font-display text-[32px] leading-[1.12] tracking-tight sm:text-[46px] lg:text-[54px]">
+              {t('home.title')}
+            </h1>
+            <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">{t('home.subtitle')}</p>
+            <div className="mt-7 max-w-xl">
+              <HeroSearch />
+            </div>
+            <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+              <div>
+                <dt className="label-xs">{t('home.featured')}</dt>
+                <dd className="mt-1 font-heading text-lg font-semibold">
+                  {total === null ? '—' : t('units.listingCount', { count: total })}
+                </dd>
+              </div>
+              <div>
+                <dt className="label-xs">{t('home.citiesTitle')}</dt>
+                <dd className="mt-1 font-heading text-lg font-semibold">4</dd>
+              </div>
+              <div>
+                <dt className="label-xs">{t('nav.manage')}</dt>
+                <dd className="mt-1 font-heading text-lg font-semibold">0%</dd>
+              </div>
+            </dl>
+          </div>
 
+          <div className="relative hidden lg:block">
+            <div className="overflow-hidden rounded-3xl border border-border">
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=75"
+                alt=""
+                className="h-[460px] w-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -left-6 w-56 rounded-2xl border border-border bg-card p-4 shadow-lg">
+              <p className="label-xs">{t('rent.income')}</p>
+              <p className="mt-1 font-display text-2xl">₽ 85 000</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t('rent.allPaid')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <FeaturedListings />
+      <HowItWorks />
+      <CitiesGrid />
+      <TrustSection />
+      <CtaBanner />
+    </div>
+  );
 }

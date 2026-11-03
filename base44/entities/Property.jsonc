@@ -3,143 +3,106 @@
   "type": "object",
   "properties": {
     "title": {
-      "type": "string",
-      "title": "Title"
+      "type": "string"
     },
-    "slug": {
-      "type": "string",
-      "title": "Slug"
-    },
-    "price": {
-      "type": "number",
-      "title": "Price"
-    },
-    "status": {
+    "category": {
       "type": "string",
       "enum": [
-        "For Sale",
-        "For Rent",
-        "Sold",
-        "Pending"
+        "apartment",
+        "house",
+        "room",
+        "commercial",
+        "land"
       ],
-      "title": "Status"
-    },
-    "property_type": {
-      "type": "string",
-      "enum": [
-        "Penthouse",
-        "Waterfront",
-        "Modernist",
-        "Estate",
-        "Townhouse",
-        "Condo"
-      ],
-      "title": "Property Type"
-    },
-    "bedrooms": {
-      "type": "number",
-      "title": "Bedrooms"
-    },
-    "bathrooms": {
-      "type": "number",
-      "title": "Bathrooms"
-    },
-    "sqft": {
-      "type": "number",
-      "title": "Square Feet"
-    },
-    "lot_size": {
-      "type": "string",
-      "title": "Lot Size"
-    },
-    "year_built": {
-      "type": "number",
-      "title": "Year Built"
-    },
-    "description": {
-      "type": "string",
-      "title": "Description"
-    },
-    "short_description": {
-      "type": "string",
-      "title": "Short Description"
-    },
-    "address": {
-      "type": "string",
-      "title": "Address"
+      "enumColors": [
+        "blue",
+        "green",
+        "purple",
+        "yellow",
+        "gray"
+      ]
     },
     "city": {
-      "type": "string",
-      "title": "City"
+      "type": "string"
     },
-    "neighborhood": {
-      "type": "string",
-      "title": "Neighborhood"
+    "district": {
+      "type": "string"
     },
-    "state": {
-      "type": "string",
-      "title": "State"
+    "metro": {
+      "type": "string"
     },
-    "zip_code": {
-      "type": "string",
-      "title": "ZIP Code"
+    "address": {
+      "type": "string"
     },
-    "latitude": {
-      "type": "number",
-      "title": "Latitude"
+    "lat": {
+      "type": "number"
     },
-    "longitude": {
-      "type": "number",
-      "title": "Longitude"
+    "lng": {
+      "type": "number"
     },
-    "images": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "title": "Images"
+    "rooms": {
+      "type": "number"
     },
-    "featured_image": {
-      "type": "string",
-      "title": "Featured Image"
+    "area": {
+      "type": "number"
     },
-    "video_url": {
-      "type": "string",
-      "title": "Video URL"
+    "floor": {
+      "type": "number"
     },
-    "features": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "title": "Features"
+    "floors": {
+      "type": "number"
     },
-    "is_featured": {
+    "year_built": {
+      "type": "number"
+    },
+    "is_rented": {
       "type": "boolean",
-      "title": "Featured"
-    },
-    "is_high_priority": {
-      "type": "boolean",
-      "title": "High Priority"
-    },
-    "agent_id": {
-      "type": "string",
-      "title": "Agent ID"
-    },
-    "garage": {
-      "type": "number",
-      "title": "Garage Spaces"
-    },
-    "price_per_sqft": {
-      "type": "number",
-      "title": "Price Per Sqft"
+      "default": false
     }
   },
   "required": [
     "title",
-    "price",
-    "property_type",
-    "city",
-    "status"
-  ]
+    "city"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }

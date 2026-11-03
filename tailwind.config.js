@@ -9,7 +9,14 @@ module.exports = {
       },
       fontFamily: {
         display: ['var(--font-display)'],
+        heading: ['var(--font-heading)'],
         body: ['var(--font-body)'],
+      },
+      screens: {
+        '3xl': '1920px',
+      },
+      maxWidth: {
+        'content': '1180px',
       },
       letterSpacing: {
         'editorial': '-0.02em',

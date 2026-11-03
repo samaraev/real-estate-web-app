@@ -5,70 +5,83 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import { I18nProvider } from '@/i18n';
+import { AccountProvider } from '@/lib/AccountContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import PropertySearch from './pages/PropertySearch';
-import PropertyDetail from './pages/PropertyDetail';
-import About from './pages/About';
-import Sell from './pages/Sell';
-import Accessibility from './pages/Accessibility';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
+import Search from './pages/Search';
+import ListingDetail from './pages/ListingDetail';
+import ListingEditor from './pages/ListingEditor';
+import MyListings from './pages/MyListings';
+import Favorites from './pages/Favorites';
+import SavedSearches from './pages/SavedSearches';
+import Messages from './pages/Messages';
+import Viewings from './pages/Viewings';
+import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
+import Mortgage from './pages/Mortgage';
+import Admin from './pages/Admin';
+import Legal from './pages/Legal';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" />
       </div>
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
+    }
+    if (authError.type === 'auth_required') {
       navigateToLogin();
       return null;
     }
   }
 
-  // Render the main app
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/properties" element={<PropertySearch />} />
-        <Route path="/property/:id" element={<PropertyDetail />} />
-        <Route path="/about" element={<About />} />
-
-        <Route path="/sell" element={<Sell />} />
-        <Route path="/accessibility" element={<Accessibility />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Route>
-    </Routes>
+    <AccountProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
+          <Route path="/listings/new" element={<ListingEditor />} />
+          <Route path="/listings/:id/edit" element={<ListingEditor />} />
+          <Route path="/my-listings" element={<MyListings />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/saved-searches" element={<SavedSearches />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/viewings" element={<Viewings />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/mortgage" element={<Mortgage />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/legal/:page" element={<Legal />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
+    </AccountProvider>
   );
 };
 
-
 function App() {
-
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+    <I18nProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </AuthProvider>
+    </I18nProvider>
   )
 }
 

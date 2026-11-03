@@ -1,0 +1,83 @@
+{
+  "name": "Report",
+  "type": "object",
+  "properties": {
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "listing",
+        "user",
+        "message",
+        "review"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray",
+        "yellow"
+      ]
+    },
+    "target_id": {
+      "type": "string"
+    },
+    "target_label": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "reviewing",
+        "resolved",
+        "dismissed"
+      ],
+      "default": "open",
+      "enumColors": [
+        "red",
+        "yellow",
+        "green",
+        "gray"
+      ]
+    },
+    "resolution": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "target_type",
+    "reason"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

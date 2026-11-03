@@ -1,0 +1,17 @@
+{
+  "name": "ReDom — недвижимость и аренда",
+  "short_name": "ReDom",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf8f3",
+  "theme_color": "#122b25",
+  "icons": [
+    {
+      "src": "https://base44.com/logo_v2.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

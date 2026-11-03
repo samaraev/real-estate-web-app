@@ -1,0 +1,187 @@
+{
+  "name": "Lease",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string"
+    },
+    "listing_id": {
+      "type": "string"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "owner_user_id": {
+      "type": "string"
+    },
+    "tenant_user_id": {
+      "type": "string"
+    },
+    "tenant_name": {
+      "type": "string"
+    },
+    "tenant_phone": {
+      "type": "string"
+    },
+    "tenant_email": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "rent_amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "RUB"
+    },
+    "due_day": {
+      "type": "number",
+      "default": 5
+    },
+    "deposit": {
+      "type": "number"
+    },
+    "deposit_paid": {
+      "type": "boolean",
+      "default": false
+    },
+    "utilities_rule": {
+      "type": "string",
+      "enum": [
+        "included",
+        "separate",
+        "capped"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "yellow"
+      ]
+    },
+    "utilities_cap": {
+      "type": "number"
+    },
+    "late_fee_rule": {
+      "type": "object"
+    },
+    "indexation_rule": {
+      "type": "object"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_tenant",
+        "active",
+        "expiring",
+        "ended",
+        "terminated"
+      ],
+      "default": "draft",
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "yellow",
+        "gray",
+        "red"
+      ]
+    },
+    "split": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "move_in_checklist": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "move_out_checklist": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "signed_by_tenant": {
+      "type": "boolean",
+      "default": false
+    },
+    "signed_by_owner": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "start_date",
+    "rent_amount"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "data.tenant_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "data.tenant_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

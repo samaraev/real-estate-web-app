@@ -1,0 +1,113 @@
+{
+  "name": "MeterReading",
+  "type": "object",
+  "properties": {
+    "lease_id": {
+      "type": "string"
+    },
+    "owner_user_id": {
+      "type": "string"
+    },
+    "tenant_user_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "electricity",
+        "water_cold",
+        "water_hot",
+        "gas",
+        "heating"
+      ],
+      "enumColors": [
+        "yellow",
+        "blue",
+        "red",
+        "purple",
+        "green"
+      ]
+    },
+    "period": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    },
+    "previous_value": {
+      "type": "number"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "approved",
+        "rejected"
+      ],
+      "default": "submitted",
+      "enumColors": [
+        "yellow",
+        "green",
+        "red"
+      ]
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lease_id",
+    "kind",
+    "value"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "data.tenant_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

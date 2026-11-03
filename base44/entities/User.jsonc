@@ -1,17 +1,103 @@
 {
-  "properties": {
-    "role": {
-      "type": "string",
-      "description": "The role of the user in the app",
-      "enum": [
-        "admin",
-        "user"
-      ]
-    }
-  },
-  "required": [
-    "role"
-  ],
   "name": "User",
-  "type": "object"
+  "type": "object",
+  "properties": {
+    "phone": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "ru",
+        "en"
+      ],
+      "default": "ru",
+      "enumColors": [
+        "blue",
+        "purple"
+      ]
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "RUB",
+        "USD",
+        "EUR"
+      ],
+      "default": "RUB",
+      "enumColors": [
+        "blue",
+        "green",
+        "yellow"
+      ]
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "buyer, renter, owner, tenant, agent"
+    },
+    "active_role": {
+      "type": "string",
+      "default": "buyer"
+    },
+    "avatar_url": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string"
+    },
+    "notify": {
+      "type": "object"
+    },
+    "telegram_username": {
+      "type": "string"
+    },
+    "phone_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "verifications": {
+      "type": "object",
+      "description": "Mock Gosuslugi / Rosreestr verification badges",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "agency_id": {
+      "type": "string",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "agency_role": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "manager",
+        "agent"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "gray"
+      ]
+    },
+    "screening_enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "screening": {
+      "type": "object"
+    }
+  }
 }
