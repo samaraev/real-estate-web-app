@@ -10,18 +10,26 @@ Default and authoritative language: **ru**. Secondary: **en**.
 | 1. Foundation | **Done** | Full entity schema + RLS, multi-role accounts, ru/en i18n with plural rules, app shell (header, footer, switches, theme), home page, profile/settings, admin shell with user & role management, provider interfaces with working mocks. |
 | 2. Listings & search | **Done (minus 2 items)** | Create/edit/archive, moderation queue, gallery, map, favorites, saved searches, natural-language search, price-fairness indicator. **Not automated:** price-drop notifications job, self-service "verified owner" request form (badge is granted by an admin today). |
 | 3. Communication & viewings | **Done in app, mocks not scheduled** | Inquiry form, in-app chat with attachments + read receipts + unread counters, viewing request / confirm / cancel, notification centre, per-type channel preferences. **Not automated:** owner-defined viewing slots, reminder scheduler, real email/Telegram delivery (mocked). |
-| 4. Rent management | **Not started** (schema ready) | Lease / Invoice / Payment / MeterReading / MaintenanceRequest entities and RLS exist; no UI, no invoice generator, no payment flow. |
+| 4. Rent management | **Done (manual month close)** | `/rent` hub with owner / tenant sides: dashboard KPIs, leases, invoices, meter readings, maintenance requests, 6-month income report with CSV export. Lease creation, contract page with terms/parties/checklists/renew/terminate/sign, invoice generation (single + for the whole month), partial and full online payment through the gateway, owner-recorded cash payments, reminders, tenant join link, meter approvals feeding utilities into the next invoice. |
 | 5. Deals & documents | **Not started** (schema ready) | Deal / Document entities exist; no kanban, generator, e-sign or escrow UI. |
 | 6. Trust, agents, monetization | **Not started** (schema ready) | Review / Report (reports work in admin) / Agency / Lead / Subscription entities exist. |
-| 7. Polish & QA | **Partial** | Localized document meta + hreflang + canonical, 404 handling, print styles, mobile-first layouts, translation-key audit (0 missing keys). Neighborhood pages, full a11y pass and SEO report not done. |
+| 7. Polish & QA | **Partial** | Localized document meta + hreflang + canonical, 404 handling, print styles, mobile-first layouts, translation-key audit. Neighborhood pages, full a11y pass and SEO report not done. |
 
-**Continue from Phase 4.**
+**Continue from Phase 5.**
+
+## Rent management (phase 4) — how it works
+
+- **Owner side:** create a lease from one of your for-sale/rent listings (`/rent` → «Создать договор»), share the tenant link (`/rent/leases/:id` → «Ссылка для жильца»), generate invoices for one lease or for every active lease of the month, record cash/bank payments, send reminders, approve meter readings with a cost, close maintenance requests with a cost, export the 6-month report to CSV.
+- **Tenant side:** accept the lease from the invite link (must be signed in with the email the owner entered), pay an invoice in full or in part, submit meter readings with a photo, create maintenance requests and comment on them.
+- **Backend functions:** `rentInvoices` (generate / generateAll / remind), `rentPayments` (pay / markPaid), `rentJoin` (link tenant by email). Money and period helpers live in `base44/shared/rent.ts`.
+- **Not automated:** the monthly run is a button, not a scheduled job — a workflow on Builder+ can call `rentInvoices` with `generateAll` once a service identity is available. Late fees are stored on the lease (`late_fee_rule`) but not charged automatically.
 
 ## What is mocked
 
 | Provider | File | Where to swap |
 |---|---|---|
-| Payments (card, SBP, refunds) | `src/lib/providers/payments.js` | Move server-side into a backend function, call YooKassa / T-Bank API with secrets. |
+| Payments — checkout in the browser | `src/lib/providers/payments.js` | Kept for reference; the rent flow actually settles server-side. |
+| Payments — rent settlement | `base44/functions/rentPayments` | Move to YooKassa / T-Bank API with secrets; the demo gateway always approves. |
 | SMS | `src/lib/providers/messaging.js` | Backend function + SMS gateway (e.g. SMS.RU). Demo code: `123456`. |
 | Email | `src/lib/providers/messaging.js` | Platform `SendEmail` integration / Resend, rendered in recipient's language. |
 | Telegram bot | `src/lib/providers/messaging.js` | Telegram Bot API `sendMessage`. |
@@ -31,15 +39,16 @@ Default and authoritative language: **ru**. Secondary: **en**.
 | Escrow / safe settlements | `src/lib/providers/escrow.js` | Bank nominal account API. |
 | «Мой налог» receipts | `src/lib/providers/tax.js` | lknpd.nalog.ru OAuth. |
 
-Other mocks: natural-language search calls an LLM (`base44/functions/nlSearch`) — real; viewing reminders, invoice scheduling and notification fan-out are not scheduled (no cron job yet).
+Natural-language search calls an LLM (`base44/functions/nlSearch`) — real. Notification fan-out is `base44/functions/notify` + service-role inserts from the rent functions; delivery beyond in-app is mocked.
 
 ## Known limitations
 
 - **Login** uses the platform's secure authentication (email/password or provider). The requested phone + SMS login is represented by phone verification in Settings with the demo code `123456`; the platform owns the auth backend, so a custom SMS login page is not implemented.
 - Seeded demo listings are published by the demo agency accounts (`owner_user_id` empty) — they are browsable and searchable, but "message the owner" for them only stores an inquiry. Listings created in the app behave fully.
-- Listing photos are stored publicly (marketing assets); chat attachments are stored privately and opened through signed URLs.
+- A lease can only be linked to a tenant account whose email matches the tenant email on the lease; there is no user directory lookup by email.
+- Listing photos are stored publicly (marketing assets); chat attachments, meter photos and maintenance photos are stored privately and opened through signed short-lived URLs.
 - No automated price-drop / saved-search alert job yet (badge + matches count only).
-- Invoice/contract PDFs will be produced via the print stylesheet (Cyrillic-safe) rather than a server PDF generator.
+- Invoice/contract PDFs are produced via the print stylesheet (Cyrillic-safe) rather than a server PDF generator.
 
 ## Roles
 

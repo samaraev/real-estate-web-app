@@ -71,6 +71,7 @@
     "hide": "Hide",
     "view": "View",
     "processing": "Processing…",
+    "login": "Sign in",
     "success": "Done",
     "error": "Error",
     "required": "Please fill the required fields",
@@ -616,7 +617,15 @@
     "payNow": "Pay now",
     "yourLease": "Your lease",
     "nextPayment": "Next payment",
-    "allPaid": "All invoices paid"
+    "allPaid": "All invoices paid",
+    "ownerSide": "I rent out",
+    "tenantSide": "I rent",
+    "tenantEmptyHint": "Ask the owner for the lease link — invoices and meter readings will appear here.",
+    "thisMonth": "This month",
+    "payments": "Payments",
+    "openRequests": "Open requests",
+    "overdueSum": "Overdue",
+    "nothingDue": "Nothing to pay"
   },
   "lease": {
     "title": "Lease",
@@ -674,7 +683,17 @@
     "checklistEmpty": "No items yet",
     "notFound": "Lease not found",
     "generateInvoice": "Create invoice",
-    "download": "Download lease"
+    "download": "Download lease",
+    "shareLink": "Tenant link",
+    "join": {
+      "title": "Lease invitation",
+      "hint": "Sign in with the email the owner used and accept the lease — invoices and readings will appear in your account.",
+      "accept": "Accept lease",
+      "done": "Lease accepted",
+      "emailMismatch": "This lease belongs to another email. Sign in with the tenant account.",
+      "taken": "This lease already has a tenant",
+      "expired": "This lease is no longer active"
+    }
   },
   "invoice": {
     "title": "Invoice",
@@ -707,6 +726,7 @@
       "refunded": "Refunded"
     },
     "paid": "Paid",
+    "total": "Total",
     "remaining": "Due",
     "pay": "Pay",
     "payOnline": "Pay online",
@@ -721,9 +741,10 @@
     "overdueNotice": "Overdue by {days}",
     "lateFeeAdded": "Late fee charged: {amount}",
     "empty": "No invoices yet",
-    "emptyHint": "Invoices are generated automatically on the 1st of each month.",
+    "emptyHint": "Generate the month's invoices with one button — tenants see them right away.",
     "generateNow": "Generate invoices for the month",
     "generated": "Invoices created: {count}",
+    "generateNow": "Generate this month's invoices",
     "note": "Invoice note",
     "tenant": "Tenant",
     "markPaid": "Mark as paid",
