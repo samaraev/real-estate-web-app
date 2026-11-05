@@ -54,6 +54,10 @@ Default and authoritative language: **ru**. Secondary: **en**.
 
 Natural-language search calls an LLM (`base44/functions/nlSearch`) — real. Notification fan-out is `base44/functions/notify` + service-role inserts from the rent functions; delivery beyond in-app is mocked.
 
+## Demo content
+
+Demo records are seeded for the app owner's account so the pages are not empty: three deals across the pipeline (offer / documents / won, with checklists, notes and escrow states), four documents generated from them (signed sale contract, handover act, tenancy agreement, English deposit receipt), three reviews (two published, one awaiting moderation), seven partners, four agencies and the published listings. Toasts (saved / paid / sent confirmations) close themselves after five seconds and can be dismissed by hand.
+
 ## Known limitations
 
 - **Login** uses the platform's secure authentication (email/password or provider). The requested phone + SMS login is represented by phone verification in Settings with the demo code `123456`; the platform owns the auth backend, so a custom SMS login page is not implemented.
