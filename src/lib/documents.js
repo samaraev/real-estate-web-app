@@ -92,7 +92,7 @@ export function buildDocument({ type, language = 'ru', deal, lease, user }) {
   const copy = COPY[language] || COPY.ru;
   const isLease = type === 'lease_contract' || (!deal && lease);
   const source = isLease ? lease || {} : deal || {};
-  const subject = source.property_title || source.listing_title || '—';
+  const subject = source.property_title || source.listing_title || (language === 'en' ? 'not specified' : 'не указан');
   const address = isLease ? source.address || source.city || '—' : subject;
   const amount = isLease ? source.rent_amount : source.amount;
   const meName = user?.full_name || user?.email || '—';

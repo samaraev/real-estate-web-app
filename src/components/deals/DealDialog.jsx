@@ -24,7 +24,7 @@ export default function DealDialog({ open, onOpenChange, listings = [], onCreate
 
   const submit = async () => {
     const amount = Number(form.amount || listing?.price || 0);
-    if (!amount) return;
+    if (!(amount > 0)) return;
     setSaving(true);
     try {
       const pct = Number(form.commission || 0);
@@ -102,7 +102,7 @@ export default function DealDialog({ open, onOpenChange, listings = [], onCreate
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             {t('common.cancel')}
           </Button>
-          <Button onClick={submit} disabled={saving || !Number(form.amount || listing?.price || 0)}>
+          <Button onClick={submit} disabled={saving || !(Number(form.amount || listing?.price || 0) > 0)}>
             {t('common.create')}
           </Button>
         </DialogFooter>
