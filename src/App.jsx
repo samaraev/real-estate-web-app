@@ -26,6 +26,10 @@ import Rent from './pages/Rent';
 import LeaseDetail from './pages/LeaseDetail';
 import InvoiceDetail from './pages/InvoiceDetail';
 import RentJoin from './pages/RentJoin';
+import Deals from './pages/Deals';
+import DealDetail from './pages/DealDetail';
+import Documents from './pages/Documents';
+import DocumentDetail from './pages/DocumentDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -66,6 +70,10 @@ const AuthenticatedApp = () => {
           <Route path="/rent/leases/:id" element={<LeaseDetail />} />
           <Route path="/rent/invoices/:id" element={<InvoiceDetail />} />
           <Route path="/rent/join/:id" element={<RentJoin />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/deals/:id" element={<DealDetail />} />
+          <Route path="/documents" element={<Documents />} />
+          <Route path="/documents/:id" element={<DocumentDetail />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/mortgage" element={<Mortgage />} />

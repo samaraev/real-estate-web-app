@@ -865,7 +865,40 @@
     "moveNext": "Next stage",
     "markLost": "Cancel deal",
     "created": "Deal created",
-    "documents": "Deal documents"
+    "documents": "Deal documents",
+    "form": {
+      "title": "New deal",
+      "listing": "Listing",
+      "listingNone": "No listing",
+      "buyerName": "Buyer name",
+      "buyerPhone": "Buyer phone",
+      "amount": "Deal amount",
+      "commission": "Commission, %",
+      "nextFollowUp": "Next contact",
+      "hint": "Pick a listing — the property and price fill in automatically.",
+      "needAmount": "Enter the deal amount"
+    },
+    "stats": {
+      "open": "Open deals",
+      "sum": "Pipeline value",
+      "won": "Closed",
+      "commission": "Commission in pipeline"
+    },
+    "escrowActions": {
+      "open": "Open escrow",
+      "fund": "Funds received",
+      "release": "Release to seller",
+      "refund": "Refund buyer"
+    },
+    "notePlaceholder": "What was discussed and what is next",
+    "noNotes": "No notes yet",
+    "noChecklist": "No steps",
+    "stageChanged": "Stage updated",
+    "escrowChanged": "Escrow status updated",
+    "openDeal": "Open deal",
+    "followUpShort": "Follow-up",
+    "documentsHint": "Generate a contract for this deal — it appears under Documents.",
+    "emptyStage": "Nothing at this stage"
   },
   "docs": {
     "title": "Documents",
@@ -899,7 +932,26 @@
       "receipt": "Money receipt"
     },
     "sendToSign": "Send to sign",
-    "sentToSign": "Document sent for signing"
+    "sentToSign": "Document sent for signing",
+    "newTitle": "New document",
+    "source": "Source",
+    "sources": {
+      "deal": "Deal",
+      "lease": "Tenancy agreement"
+    },
+    "needSource": "Pick a deal or a tenancy agreement",
+    "created": "Document generated",
+    "signed": "Document signed",
+    "nameForSign": "Name for signature",
+    "parties": "Parties",
+    "notFound": "Document not found",
+    "backToList": "Back to documents",
+    "signatures": "Signatures",
+    "noSignatures": "No signatures yet",
+    "copyEn": "EN copy",
+    "enCreated": "English copy created",
+    "prepare": "Prepare",
+    "step": "Step {n}"
   },
   "mortgage": {
     "title": "Mortgage calculator",

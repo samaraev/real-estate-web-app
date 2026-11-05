@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, LayoutDashboard, LogOut, Settings, Shield, UserRound, Moon, Sun } from 'lucide-react';
+import { FileText, Handshake, Heart, LayoutDashboard, LogOut, Settings, Shield, UserRound, Moon, Sun } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,6 +62,12 @@ export default function UserMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate('/my-listings')} className="gap-2">
           <LayoutDashboard className="h-4 w-4" /> {t('nav.myListings')}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/deals')} className="gap-2">
+          <Handshake className="h-4 w-4" /> {t('nav.deals')}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/documents')} className="gap-2">
+          <FileText className="h-4 w-4" /> {t('nav.documents')}
         </DropdownMenuItem>
         {isAdmin ? (
           <DropdownMenuItem onClick={() => navigate('/admin')} className="gap-2">
