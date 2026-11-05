@@ -11,7 +11,7 @@ import { base44 } from '@/api/base44Client';
 import { useI18n } from '@/i18n';
 import { useAccount } from '@/lib/AccountContext';
 import { toast } from '@/components/ui/use-toast';
-import { defaultChecklist, dealTitle, nextStage, progressOf } from '@/lib/deals';
+import { dealTitle, nextStage, normalizeChecklist, progressOf } from '@/lib/deals';
 import { buildDocument } from '@/lib/documents';
 import usePageMeta from '@/hooks/usePageMeta';
 
@@ -79,10 +79,10 @@ export default function DealDetail() {
   const percent = Math.round((done / total) * 100);
 
   const toggle = (key) => {
-    const checklist = (deal.checklist?.length ? deal.checklist : defaultChecklist()).map((item) =>
+    const checklist = normalizeChecklist(deal.checklist).map((item) =>
       item.key === key ? { ...item, done: !item.done } : item
     );
-    patch({ checklist });
+    patch({ checklist: checklist.map(({ key: stepKey, done }) => ({ key: stepKey, done })) });
   };
 
   const createDocument = async () => {

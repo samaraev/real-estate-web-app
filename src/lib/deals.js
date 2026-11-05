@@ -9,6 +9,25 @@ export const CHECKLIST_KEYS = ['passport', 'ownership', 'consent', 'contract', '
 
 export const defaultChecklist = () => CHECKLIST_KEYS.map((key) => ({ key, done: false }));
 
+/**
+ * Checklist items always come back with a known step key, even when older
+ * records were saved without one (bare strings, `label`-only objects, etc.).
+ */
+export const normalizeChecklist = (checklist) => {
+  const list = Array.isArray(checklist) && checklist.length ? checklist : defaultChecklist();
+  return list.map((item, index) => {
+    const value = item && typeof item === 'object' ? item : {};
+    const isKnownString = typeof item === 'string' && CHECKLIST_KEYS.includes(item);
+    const key = isKnownString
+      ? item
+      : CHECKLIST_KEYS.includes(value?.key)
+        ? value.key
+        : CHECKLIST_KEYS[index] || `step_${index}`;
+    const fallbackLabel = typeof item === 'string' && !isKnownString ? item : value.label || value.title || '';
+    return { key, done: Boolean(value?.done), label: fallbackLabel };
+  });
+};
+
 export const stageIndex = (stage) => {
   const index = STAGES.indexOf(stage);
   if (index !== -1) return index;

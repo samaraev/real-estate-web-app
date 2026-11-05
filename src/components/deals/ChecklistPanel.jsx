@@ -1,18 +1,18 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { useI18n } from '@/i18n';
-import { defaultChecklist } from '@/lib/deals';
+import { normalizeChecklist } from '@/lib/deals';
 
 export default function ChecklistPanel({ deal, onToggle }) {
   const { t } = useI18n();
-  const checklist = Array.isArray(deal.checklist) && deal.checklist.length ? deal.checklist : defaultChecklist();
+  const checklist = normalizeChecklist(deal.checklist);
 
   return (
     <section className="rounded-2xl border border-border bg-card p-4">
       <h2 className="font-heading text-sm font-semibold">{t('deals.checklist')}</h2>
       <ul className="mt-3 space-y-1.5">
-        {checklist.map((item) => (
-          <li key={item.key}>
+        {checklist.map((item, index) => (
+          <li key={`${item.key}-${index}`}>
             <button
               type="button"
               onClick={() => onToggle(item.key)}
@@ -26,7 +26,7 @@ export default function ChecklistPanel({ deal, onToggle }) {
                 {item.done ? <Check className="h-3.5 w-3.5" /> : null}
               </span>
               <span className={item.done ? 'text-muted-foreground line-through' : ''}>
-                {t(`docs.checklistItems.${item.key}`)}
+                {item.label || t(`docs.checklistItems.${item.key}`)}
               </span>
             </button>
           </li>
