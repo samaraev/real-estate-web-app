@@ -30,6 +30,11 @@ import Deals from './pages/Deals';
 import DealDetail from './pages/DealDetail';
 import Documents from './pages/Documents';
 import DocumentDetail from './pages/DocumentDetail';
+import Agencies from './pages/Agencies';
+import AgencyDetail from './pages/AgencyDetail';
+import Crm from './pages/Crm';
+import Pricing from './pages/Pricing';
+import Reviews from './pages/Reviews';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -74,6 +79,11 @@ const AuthenticatedApp = () => {
           <Route path="/deals/:id" element={<DealDetail />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/documents/:id" element={<DocumentDetail />} />
+          <Route path="/agencies" element={<Agencies />} />
+          <Route path="/agencies/:id" element={<AgencyDetail />} />
+          <Route path="/crm" element={<Crm />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/mortgage" element={<Mortgage />} />

@@ -12,10 +12,10 @@ Default and authoritative language: **ru**. Secondary: **en**.
 | 3. Communication & viewings | **Done in app, mocks not scheduled** | Inquiry form, in-app chat with attachments + read receipts + unread counters, viewing request / confirm / cancel, notification centre, per-type channel preferences. **Not automated:** owner-defined viewing slots, reminder scheduler, real email/Telegram delivery (mocked). |
 | 4. Rent management | **Done (manual month close)** | `/rent` hub with owner / tenant sides: dashboard KPIs, leases, invoices, meter readings, maintenance requests, 6-month income report with CSV export. Lease creation, contract page with terms/parties/checklists/renew/terminate/sign, invoice generation (single + for the whole month), partial and full online payment through the gateway, owner-recorded cash payments, reminders, tenant join link, meter approvals feeding utilities into the next invoice. |
 | 5. Deals & documents | **Done (escrow & e-sign mocked)** | `/deals` pipeline board with drag & drop between stages plus a list view, deal detail with checklist, notes, escrow panel, commission and follow-up date; `/documents` list with type filter, generator (sale contract / tenancy / handover act / deposit receipt in ru+en), document view with parties, sections, signatures, send-to-sign, EN copy and print. |
-| 6. Trust, agents, monetization | **Not started** (schema ready) | Review / Report (reports work in admin) / Agency / Lead / Subscription entities exist. |
+| 6. Trust, agents, monetization | **Done (XML import & partner directory still stubs)** | `/reviews` reputation page + reviews about the owner on every listing + admin moderation queue; `/agencies` directory, agency profile with team, attached listings and CRM entry; `/crm` lead pipeline with drag & drop stages, budgets and commissions; `/pricing` plans with a mock-paid subscription record and 7-day listing boosts. |
 | 7. Polish & QA | **Partial** | Localized document meta + hreflang + canonical, 404 handling, print styles, mobile-first layouts, translation-key audit. Neighborhood pages, full a11y pass and SEO report not done. |
 
-**Continue from Phase 6.**
+**Continue from Phase 7.**
 
 ## Rent management (phase 4) — how it works
 
@@ -29,6 +29,13 @@ Default and authoritative language: **ru**. Secondary: **en**.
 - **Pipeline:** a deal is created from one of your listings (object and price prefill), starts at «Заявка» and moves through viewing → offer → deposit → documents → closing → won, or is cancelled. Stages change by dragging a card on the board, from the list view or from the deal page.
 - **Deal page:** six-step checklist (passport, title extract, spouse consent, contract, handover act, receipt), escrow panel (open → funds received → release, or refund), notes with timestamps, and the deal's own documents.
 - **Documents:** generated from a deal or a lease in Russian (authoritative) or English, stored with a rendered `content` snapshot, signed with the demo e-signature provider (`signatures[]` + status draft → sent → partially signed → signed), printable and duplicable as an English copy.
+
+## Trust, agents & monetization (phase 6) — how it works
+
+- **Reviews:** a signed-in user writes a review about an owner straight from a listing page (`Review` with `status: pending`); the author sees it in `/reviews → Мои отзывы`, and it becomes public on the listing and in the owner's average only after an admin approves it in the admin panel's «Отзывы» tab. `/reviews` shows the average rating and every review about the current user.
+- **Agencies:** `/agencies` lists agency profiles with search and a city filter; anyone signed in can create theirs («Работаю в агентстве»), which puts them in `members`. The agency page shows contacts, the team, its published listings, and for members a button that stamps `agency_id` on their own listings plus a link into the CRM. The «проверено» badge stays admin-granted.
+- **CRM:** `/crm` is the lead pipeline (`new → contacted → viewing → negotiation → won/lost`) with drag & drop, open-lead, budget-in-play and commission KPIs; cards open a dialog to change any field or the stage.
+- **Monetization:** `/pricing` compares the three plans, stores the chosen one as a `Subscription` (period end, quota from `PLAN_QUOTA`, payment reference from the mock gateway) and boosts a published listing for 7 days by setting `boost_until`.
 
 ## What is mocked
 

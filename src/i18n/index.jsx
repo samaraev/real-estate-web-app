@@ -1,6 +1,16 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import ru from './ru.json';
 import en from './en.json';
+import phase6 from './phase6';
+
+const merge = (base, extra) => {
+  const out = { ...base };
+  Object.entries(extra).forEach(([key, value]) => {
+    out[key] =
+      value && typeof value === 'object' && !Array.isArray(value) ? merge(base[key] || {}, value) : value;
+  });
+  return out;
+};
 
 // Adding a language = add a JSON file here and register it below.
 export const LOCALES = {
@@ -8,7 +18,7 @@ export const LOCALES = {
   en: { label: 'EN', name: 'English' },
 };
 
-const MESSAGES = { ru, en };
+const MESSAGES = { ru: merge(ru, phase6.ru), en: merge(en, phase6.en) };
 const STORAGE_KEY = 'redom_locale';
 const FALLBACK = 'ru';
 

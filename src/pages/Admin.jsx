@@ -20,20 +20,23 @@ export default function Admin() {
   const [pending, setPending] = useState(null);
   const [users, setUsers] = useState(null);
   const [reports, setReports] = useState(null);
+  const [reviews, setReviews] = useState(null);
   const [query, setQuery] = useState('');
   const [rejecting, setRejecting] = useState(null);
   const [reason, setReason] = useState('');
   const [resolution, setResolution] = useState('');
 
   const loadAll = useCallback(async () => {
-    const [pendingPage, userList, reportPage] = await Promise.all([
+    const [pendingPage, userList, reportPage, reviewPage] = await Promise.all([
       base44.entities.Listing.filter({ status: 'pending' }, { sort: 'created_date', limit: 50 }).catch(() => ({ items: [] })),
       base44.entities.User.list().catch(() => []),
       base44.entities.Report.filter({}, { sort: '-created_date', limit: 50 }).catch(() => ({ items: [] })),
+      base44.entities.Review.filter({ status: 'pending' }, { sort: '-created_date', limit: 50 }).catch(() => ({ items: [] })),
     ]);
     setPending(pendingPage.items || []);
     setUsers(Array.isArray(userList) ? userList : []);
     setReports(reportPage.items || []);
+    setReviews(reviewPage.items || []);
   }, []);
 
   useEffect(() => {
@@ -70,6 +73,12 @@ export default function Admin() {
     loadAll();
   };
 
+  const moderateReview = async (review, status) => {
+    await base44.entities.Review.update(review.id, { status });
+    toast({ title: status === 'published' ? t('admin.reviewPublished') : t('admin.reviewRejected') });
+    loadAll();
+  };
+
   const filteredUsers = useMemo(() => {
     const list = users || [];
     const q = query.trim().toLowerCase();
@@ -95,6 +104,7 @@ export default function Admin() {
             <TabsTrigger value="moderation" className="rounded-full text-xs">{t('admin.tabs.moderation')}</TabsTrigger>
             <TabsTrigger value="users" className="rounded-full text-xs">{t('admin.tabs.users')}</TabsTrigger>
             <TabsTrigger value="reports" className="rounded-full text-xs">{t('admin.tabs.reports')}</TabsTrigger>
+            <TabsTrigger value="reviews" className="rounded-full text-xs">{t('admin.tabs.reviews')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="moderation">
@@ -208,6 +218,39 @@ export default function Admin() {
                     ) : (
                       <p className="mt-2 text-xs text-muted-foreground">{report.resolution}</p>
                     )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </TabsContent>
+
+          <TabsContent value="reviews">
+            {reviews === null ? (
+              <Loading />
+            ) : reviews.length === 0 ? (
+              <EmptyState title={t('admin.reviewEmpty')} />
+            ) : (
+              <ul className="space-y-3">
+                {reviews.map((review) => (
+                  <li key={review.id} className="rounded-2xl border border-border bg-card p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="font-heading text-sm font-semibold">{review.author_name || review.target_user_id}</p>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary" className="rounded-full text-[10px]">
+                          {t(`reviews.roles.${review.target_role || 'owner'}`)}
+                        </Badge>
+                        <Badge variant="outline" className="rounded-full text-[10px]">{review.rating} / 5</Badge>
+                      </div>
+                    </div>
+                    <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">{review.text}</p>
+                    <div className="mt-3 flex gap-2">
+                      <Button size="sm" className="rounded-full" onClick={() => moderateReview(review, 'published')}>
+                        <Check className="mr-1 h-3.5 w-3.5" />{t('admin.approve')}
+                      </Button>
+                      <Button size="sm" variant="outline" className="rounded-full" onClick={() => moderateReview(review, 'rejected')}>
+                        <X className="mr-1 h-3.5 w-3.5" />{t('admin.reject')}
+                      </Button>
+                    </div>
                   </li>
                 ))}
               </ul>

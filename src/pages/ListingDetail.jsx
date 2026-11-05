@@ -8,6 +8,7 @@ import ListingCard from '@/components/listings/ListingCard';
 import InquiryDialog from '@/components/inquiry/InquiryDialog';
 import ViewingDialog from '@/components/viewings/ViewingDialog';
 import ReportDialog from '@/components/report/ReportDialog';
+import OwnerReviews from '@/components/reviews/OwnerReviews';
 import Loading from '@/components/common/Loading';
 import EmptyState from '@/components/common/EmptyState';
 import { base44 } from '@/api/base44Client';
@@ -204,6 +205,8 @@ export default function ListingDetail() {
               </div>
             </section>
           ) : null}
+
+          <OwnerReviews ownerUserId={listing.owner_user_id} ownerName={listing.owner_name} isOwner={isOwner} />
 
           {listing.deal_type === 'rent' ? (
             <section className="mt-8 rounded-2xl border border-border bg-card p-5">
