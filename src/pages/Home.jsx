@@ -17,6 +17,18 @@ export default function Home() {
     title: t('nav.home'),
     description: t('home.subtitle'),
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=70',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'ReDom',
+      url: `${window.location.origin}/`,
+      inLanguage: 'ru-RU',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${window.location.origin}/search?keyword={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    },
   });
 
   useEffect(() => {

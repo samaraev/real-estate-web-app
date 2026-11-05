@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /settings
+Disallow: /messages
+Disallow: /rent
+Disallow: /deals
+Disallow: /documents
+Disallow: /crm
+Disallow: /notifications
+
+Sitemap: https://real-estate-agency-copy-b98fce34.base44.app/sitemap.xml

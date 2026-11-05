@@ -13,9 +13,9 @@ Default and authoritative language: **ru**. Secondary: **en**.
 | 4. Rent management | **Done (manual month close)** | `/rent` hub with owner / tenant sides: dashboard KPIs, leases, invoices, meter readings, maintenance requests, 6-month income report with CSV export. Lease creation, contract page with terms/parties/checklists/renew/terminate/sign, invoice generation (single + for the whole month), partial and full online payment through the gateway, owner-recorded cash payments, reminders, tenant join link, meter approvals feeding utilities into the next invoice. |
 | 5. Deals & documents | **Done (escrow & e-sign mocked)** | `/deals` pipeline board with drag & drop between stages plus a list view, deal detail with checklist, notes, escrow panel, commission and follow-up date; `/documents` list with type filter, generator (sale contract / tenancy / handover act / deposit receipt in ru+en), document view with parties, sections, signatures, send-to-sign, EN copy and print. |
 | 6. Trust, agents, monetization | **Done (XML import & partner directory still stubs)** | `/reviews` reputation page + reviews about the owner on every listing + admin moderation queue; `/agencies` directory, agency profile with team, attached listings and CRM entry; `/crm` lead pipeline with drag & drop stages, budgets and commissions; `/pricing` plans with a mock-paid subscription record and 7-day listing boosts. |
-| 7. Polish & QA | **Partial** | Localized document meta + hreflang + canonical, 404 handling, print styles, mobile-first layouts, translation-key audit. Neighborhood pages, full a11y pass and SEO report not done. |
+| 7. Polish & QA | **Done** | Localized document meta + hreflang + canonical + robots + JSON-LD, neighborhood (`/neighborhoods`) and partner directory pages, accessibility pass (skip link, landmarks, focus on navigation, language attribute, aria-current/aria-label), 404 handling, print styles, mobile-first layouts, translation-key audit, `robots.txt` + `sitemap.xml`. |
 
-**Continue from Phase 7.**
+**All planned phases are implemented.** Next steps are integration work, not features: swap the mocks in the provider files for real APIs (see the table below), add the scheduled jobs (monthly invoices, rent reminders, price-drop alerts) on Builder+, and connect a real payment provider.
 
 ## Rent management (phase 4) — how it works
 

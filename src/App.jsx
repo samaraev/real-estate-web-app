@@ -35,6 +35,9 @@ import AgencyDetail from './pages/AgencyDetail';
 import Crm from './pages/Crm';
 import Pricing from './pages/Pricing';
 import Reviews from './pages/Reviews';
+import Neighborhoods from './pages/Neighborhoods';
+import NeighborhoodDetail from './pages/NeighborhoodDetail';
+import Partners from './pages/Partners';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -79,6 +82,9 @@ const AuthenticatedApp = () => {
           <Route path="/deals/:id" element={<DealDetail />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/documents/:id" element={<DocumentDetail />} />
+          <Route path="/neighborhoods" element={<Neighborhoods />} />
+          <Route path="/neighborhoods/:cityId/:district" element={<NeighborhoodDetail />} />
+          <Route path="/partners" element={<Partners />} />
           <Route path="/agencies" element={<Agencies />} />
           <Route path="/agencies/:id" element={<AgencyDetail />} />
           <Route path="/crm" element={<Crm />} />

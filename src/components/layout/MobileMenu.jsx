@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarDays, ChartNoAxesColumn, FileText, Handshake, Heart, LayoutDashboard, LogOut, MessageSquare, Shield, Star, Wallet } from 'lucide-react';
+import { CalendarDays, ChartNoAxesColumn, Compass, FileText, Handshake, Heart, LayoutDashboard, LogOut, MapPin, MessageSquare, Shield, Star, Wallet } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle, SheetHeader } from '@/components/ui/sheet';
 import { useI18n } from '@/i18n';
 import { useAccount } from '@/lib/AccountContext';
@@ -24,6 +24,8 @@ export default function MobileMenu({ open, onOpenChange }) {
     { to: '/rent', key: 'nav.manage', icon: Wallet },
     { to: '/deals', key: 'nav.deals', icon: Handshake },
     { to: '/documents', key: 'nav.documents', icon: FileText },
+    { to: '/neighborhoods', key: 'nav.neighborhoods', icon: MapPin },
+    { to: '/partners', key: 'nav.partners', icon: Compass },
     { to: '/reviews', key: 'nav.reviews', icon: Star },
     { to: '/crm', key: 'nav.crm', icon: ChartNoAxesColumn },
     { to: '/settings', key: 'nav.settings', icon: Shield },

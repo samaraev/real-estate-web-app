@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import ru from './ru.json';
 import en from './en.json';
 import phase6 from './phase6';
+import phase7 from './phase7';
 
 const merge = (base, extra) => {
   const out = { ...base };
@@ -18,7 +19,10 @@ export const LOCALES = {
   en: { label: 'EN', name: 'English' },
 };
 
-const MESSAGES = { ru: merge(ru, phase6.ru), en: merge(en, phase6.en) };
+const MESSAGES = {
+  ru: merge(merge(ru, phase6.ru), phase7.ru),
+  en: merge(merge(en, phase6.en), phase7.en),
+};
 const STORAGE_KEY = 'redom_locale';
 const FALLBACK = 'ru';
 

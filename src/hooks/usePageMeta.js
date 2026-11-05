@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useI18n } from '@/i18n';
 
 /**
- * Localized document metadata: title, description, og tags and hreflang.
+ * Localized document metadata: title, description, og tags, robots, JSON-LD and hreflang.
  * Russian is the canonical default; English is served with the same URL and
  * announced via hreflang alternates.
  */
-export default function usePageMeta({ title, description, image }) {
+export default function usePageMeta({ title, description, image, jsonLd, noindex = false }) {
   const { locale } = useI18n();
+  const structured = jsonLd ? JSON.stringify(jsonLd) : '';
 
   useEffect(() => {
     const fullTitle = title ? `${title} · ReDom` : 'ReDom — покупка, аренда и управление арендой';
@@ -25,6 +26,7 @@ export default function usePageMeta({ title, description, image }) {
     };
 
     if (description) setMeta('name', 'description', description);
+    setMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow');
     setMeta('property', 'og:title', fullTitle);
     if (description) setMeta('property', 'og:description', description);
     setMeta('property', 'og:locale', locale === 'ru' ? 'ru_RU' : 'en_US');
@@ -56,5 +58,18 @@ export default function usePageMeta({ title, description, image }) {
       link.setAttribute('href', window.location.origin + window.location.pathname);
       document.head.appendChild(link);
     }
-  }, [title, description, image, locale]);
+
+    let ld = document.head.querySelector('script[data-page-jsonld]');
+    if (structured) {
+      if (!ld) {
+        ld = document.createElement('script');
+        ld.type = 'application/ld+json';
+        ld.setAttribute('data-page-jsonld', '');
+        document.head.appendChild(ld);
+      }
+      ld.textContent = structured;
+    } else if (ld) {
+      ld.remove();
+    }
+  }, [title, description, image, locale, structured, noindex]);
 }

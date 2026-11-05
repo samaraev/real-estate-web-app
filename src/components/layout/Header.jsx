@@ -42,6 +42,7 @@ export default function Header() {
               <Link
                 key={item.to}
                 to={item.to}
+                aria-current={isActive ? 'page' : undefined}
                 className={`rounded-full px-3 py-2 text-sm transition-colors ${
                   isActive ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}

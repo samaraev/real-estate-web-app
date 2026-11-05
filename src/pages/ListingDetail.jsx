@@ -36,6 +36,29 @@ export default function ListingDetail() {
     title: listing?.title,
     description: listing?.description?.slice(0, 160),
     image: listing?.cover_url,
+    jsonLd: listing
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'RealEstateListing',
+          name: listing.title,
+          description: listing.description ? listing.description.slice(0, 300) : undefined,
+          url: window.location.href,
+          image: listing.cover_url || undefined,
+          datePosted: listing.created_date,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: listing.city,
+            streetAddress: listing.address || undefined,
+            addressCountry: 'RU',
+          },
+          offers: {
+            '@type': 'Offer',
+            price: listing.price,
+            priceCurrency: listing.currency || 'RUB',
+            availability: 'https://schema.org/InStock',
+          },
+        }
+      : undefined,
   });
 
   useEffect(() => {

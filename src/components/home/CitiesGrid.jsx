@@ -34,8 +34,15 @@ export default function CitiesGrid() {
 
   return (
     <section className="mx-auto w-full max-w-content px-4 py-14 sm:px-6">
-      <p className="label-xs mb-2">{t('home.citiesTitle')}</p>
-      <h2 className="font-display text-2xl sm:text-3xl">{t('home.citiesSub')}</h2>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="label-xs mb-2">{t('home.citiesTitle')}</p>
+          <h2 className="font-display text-2xl sm:text-3xl">{t('home.citiesSub')}</h2>
+        </div>
+        <Link to="/neighborhoods" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          {t('neighborhood.browseAll')}
+        </Link>
+      </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {CITIES.map((city) => {
