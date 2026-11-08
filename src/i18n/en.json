@@ -176,6 +176,7 @@
     "tenant": "Tenant",
     "agent": "Agent",
     "admin": "Administrator",
+    "user": "User",
     "switch": "Role",
     "switchTitle": "Switch role",
     "switchHint": "One account, every role. Choose what you need now.",
@@ -412,7 +413,10 @@
     "empty": "No saved searches",
     "emptyHint": "Save filters to get new listings.",
     "alerts": "Alerts",
-    "newMatches": "{count} new matches",
+    "newMatches": {
+      "one": "{count} new match",
+      "other": "{count} new matches"
+    },
     "delete": "Delete search"
   },
   "messages": {
@@ -451,7 +455,10 @@
       "cancelled": "Cancelled",
       "completed": "Completed"
     },
-    "ownerSlots": "My slots",
+    "tabs": {
+      "incoming": "Incoming requests",
+      "outgoing": "My requests"
+    },
     "addSlot": "Add slot",
     "comment": "Comment",
     "booked": "Request sent to the owner",
@@ -475,9 +482,16 @@
     "unreadOnly": "Unread",
     "types": {
       "message": "Messages",
+      "messages": "Messages",
       "viewing": "Viewings",
+      "viewings": "Viewings",
       "invoice": "Invoices",
+      "invoice_issued": "New invoice",
+      "invoice_reminder": "Payment reminder",
       "payment": "Payments",
+      "rent_paid": "Rent paid",
+      "rent_payment_recorded": "Rent payment recorded",
+      "lease_joined": "Tenancy agreement",
       "maintenance": "Requests",
       "search": "Saved searches",
       "system": "System"
@@ -509,7 +523,7 @@
     "verify": "Verify",
     "verified": "Phone verified",
     "wrongCode": "Wrong code",
-    "verification": "Verification centre",
+    "verification": "Verification",
     "screening": "Tenant profile",
     "screeningHint": "Show owners a verified profile when you apply",
     "security": "Security",
@@ -558,7 +572,7 @@
     "metrics": "Key metrics",
     "users_total": "Users",
     "listings_total": "Listings",
-    "gmv": "Deal GMV",
+    "gmv": "Deal volume",
     "rent_volume": "Rent volume",
     "audit": "Audit log",
     "auditEmpty": "No events yet",
@@ -1057,6 +1071,12 @@
     "noAccess": "Not enough permissions",
     "loginRequired": "Sign in to continue",
     "fileTooLarge": "File is too large (max 10 MB)",
-    "uploadFailed": "Could not upload the file"
+    "uploadFailed": "Could not upload the file",
+    "accessTitle": "Access restricted",
+    "accessText": "You are not registered in this app. Ask the app administrator for access.",
+    "accessHint": "If you believe this is an error:",
+    "accessAccount": "check that you signed in with the right account;",
+    "accessAdmin": "contact the app administrator;",
+    "accessRelogin": "try signing out and back in."
   }
 }

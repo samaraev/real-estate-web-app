@@ -55,7 +55,7 @@ export function I18nProvider({ children }) {
     (key, params = {}) => {
       let raw = resolvePath(MESSAGES[locale], key);
       if (raw === undefined) raw = resolvePath(MESSAGES[FALLBACK], key);
-      if (raw === undefined) return key;
+      if (raw === undefined) return params.defaultValue !== undefined ? String(params.defaultValue) : key;
 
       if (raw && typeof raw === 'object' && params.count !== undefined) {
         const form = new Intl.PluralRules(locale).select(Number(params.count));

@@ -56,8 +56,8 @@ export default function Viewings() {
       <div className="mx-auto w-full max-w-content px-4 sm:px-6">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="mb-5 rounded-full bg-secondary/60 p-1">
-            <TabsTrigger value="incoming" className="rounded-full text-xs">{t('viewings.ownerSlots')}</TabsTrigger>
-            <TabsTrigger value="outgoing" className="rounded-full text-xs">{t('viewings.book')}</TabsTrigger>
+            <TabsTrigger value="incoming" className="rounded-full text-xs">{t('viewings.tabs.incoming')}</TabsTrigger>
+            <TabsTrigger value="outgoing" className="rounded-full text-xs">{t('viewings.tabs.outgoing')}</TabsTrigger>
           </TabsList>
         </Tabs>
 
