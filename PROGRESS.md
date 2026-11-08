@@ -56,7 +56,14 @@ Natural-language search calls an LLM (`base44/functions/nlSearch`) — real. Not
 
 ## Demo content
 
-Demo records are seeded for the app owner's account so the pages are not empty: three deals across the pipeline (offer / documents / won, with checklists, notes and escrow states), four documents generated from them (signed sale contract, handover act, tenancy agreement, English deposit receipt), three reviews (two published, one awaiting moderation), seven partners, four agencies and the published listings. Toasts (saved / paid / sent confirmations) close themselves after five seconds and can be dismissed by hand.
+Demo records are seeded for the app owner's account («Филипп Самараев») so every page has content to look at:
+
+- **Listings:** the shared catalogue of published listings plus five owned by the owner — two rentals (an active and an expiring lease are built on them), a boosted sale listing, a draft and one awaiting moderation, each with a photo gallery.
+- **Deals:** eight deals so all pipeline stages are filled — inquiry, viewing, offer, deposit (escrow opened), documents (escrow funded), closing, won and lost, with checklists, notes, commission and follow-up dates.
+- **Documents:** eight records covering every type (sale contract, tenancy, handover act, deposit receipt, other) and every status (draft, sent, partially signed, signed), including a tenancy and a signed deposit receipt linked to the demo lease.
+- **Rent:** two owner leases (active + expiring) and one lease where the owner is the tenant, eight invoices (paid, partially paid, overdue, upcoming), five succeeded payments, eight meter readings (approved, awaiting approval, rejected) and four maintenance requests (new, in progress, waiting, done with cost).
+- **Communication:** two conversations with two-sided threads and unread counters, four viewings split between incoming and outgoing, seven notifications of different types.
+- **CRM / trust / admin:** six leads across all stages, three saved searches, three favourites (one with a price drop), three reports (open, reviewing, resolved), three reviews (two published, one pending) and the four agencies / six partners directories. Toasts (saved / paid / sent confirmations) close themselves after five seconds and can be dismissed by hand.
 
 ## Known limitations
 
